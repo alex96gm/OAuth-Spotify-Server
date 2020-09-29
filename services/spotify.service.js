@@ -14,7 +14,6 @@ module.exports.spotifyRequest = params => {
             }
             return resolve(response.data);
         }).catch(responseError => {
-          console.log(response);
             return reject({
                 statusCode: responseError.response.status,
                 error: responseError.response.data.error,
