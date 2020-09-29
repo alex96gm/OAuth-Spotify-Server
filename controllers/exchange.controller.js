@@ -22,6 +22,7 @@ module.exports.exchangeToken = (req, res, next) => {
     });
 
     spotifyService.spotifyRequest(setConfigRequets).then(session => {
+        console.log(session);
         let result = {
             "access_token": session.access_token,
             "expires_in": session.expires_in,
