@@ -18,7 +18,7 @@ module.exports.refreshToken = (req, res, next) => {
     });
     
     spotifyService.spotifyRequest(setConfigRequets).then(session => {
-        return res.json({
+        return res.send({
             "access_token": session.access_token,
             "expires_in": session.expires_in
         });
