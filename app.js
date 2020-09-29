@@ -1,5 +1,4 @@
-var cors = require('cors'),
-  http = require('http'),
+const cors = require('cors'),
   express = require('express'),
   dotenv = require('dotenv'),
   bodyParser = require('body-parser'),

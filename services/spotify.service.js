@@ -1,28 +1,22 @@
-
-const API_URL = "https://accounts.spotify.com/api/token";
-
-var axios = require('axios').default;
-
-const CLIENT_ID = process.env.CLIENT_ID;
-const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const axios = require('axios').default;
+const configAxiosHelper = require('../utils/configs.axios.helper');
 
 module.exports.spotifyRequest = params => {
     return new Promise((resolve, reject) => {
-        axios.post(API_URL, params, {headers:  {"Authorization": "Basic "+ btoa(CLIENT_ID + ":" + CLIENT_SECRET)}})
-        .then(resp => {
-            console.log('Respuesta', resp );
-            if (resp.statusCode != 200) {
-                return Promise.reject({
-                  statusCode: resp.statusCode,
-                  body: resp.body
-                });
-              }
-            return Promise.resolve(resp.body);
-        }).catch( error => {
-            console.log(error)
-            return Promise.reject({
-                statusCode: 500,
-                body: JSON.stringify(error)
+      axios.post(process.env.SPOTIFT_API + '/token', params, configAxiosHelper.configAxiosSpotify).then(response => {
+            if (result.statusCode != 200) {
+                return reject({
+                  statusCode: response.status,
+                  error: response.data.error,
+                  errorDescription: response.data.error_description
+              });
+            }
+            return resolve(response.data);
+        }).catch(responseError => {
+            return reject({
+                statusCode: responseError.response.status,
+                error: responseError.response.data.error,
+                errorDescription: responseError.response.data.error_description
             });
         });
   })

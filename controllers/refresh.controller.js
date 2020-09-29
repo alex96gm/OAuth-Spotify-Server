@@ -1,6 +1,7 @@
 
 const spotifyService = require('../services/spotify.service');
 const encriptionHelper = require('../utils/encription.helper');
+const qs = require('qs');
 
 module.exports.refreshToken = (req, res, next) => {
     const params = req.body;
@@ -9,7 +10,13 @@ module.exports.refreshToken = (req, res, next) => {
             "error": "Parameter missing"
         });
     }
-    const setConfigRequets = {grant_type: "refresh_token", refresh_token: encriptionHelper.decrypt(params.refresh_token)}
+    const setConfigRequets = qs.stringify({
+        grant_type: "refresh_token", 
+        refresh_token: encriptionHelper.decrypt(params.refresh_token),
+        client_id: process.env.CLIENT_ID,
+        client_secret: process.env.CLIENT_SECRET
+    });
+    
     spotifyService.spotifyRequest(setConfigRequets).then(session => {
         return res.json({
             "access_token": session.access_token,
