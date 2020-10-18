@@ -25,7 +25,7 @@ module.exports.exchangeToken = (req, res, next) => {
         let result = {
             "access_token": session.access_token,
             "expires_in": session.expires_in,
-            "refresh_token": encriptionHelper.encrypt(session.refresh_token)
+            "refresh_token": session.refresh_token
         };
         return res.send(result);
     }).catch(response => {
