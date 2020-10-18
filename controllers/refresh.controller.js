@@ -12,7 +12,7 @@ module.exports.refreshToken = (req, res, next) => {
     }
     const setConfigRequets = qs.stringify({
         grant_type: "refresh_token", 
-        refresh_token: encriptionHelper.decrypt(params.refresh_token),
+        refresh_token: params.refresh_token,
         client_id: process.env.CLIENT_ID,
         client_secret: process.env.CLIENT_SECRET
     });

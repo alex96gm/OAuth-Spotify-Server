@@ -4,7 +4,7 @@ const configAxiosHelper = require('../utils/configs.axios.helper');
 module.exports.spotifyRequest = params => {
     return new Promise((resolve, reject) => {
       axios.post(process.env.SPOTIFT_API + '/token', params, configAxiosHelper.configAxiosSpotify).then(response => {
-            if (result.statusCode != 200) {
+            if (response.status != 200) {
                 return reject({
                   statusCode: response.status,
                   error: response.data.error,
